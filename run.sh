@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Create and activate venv with the system `python3` (falls back from python3.12)
+# Create and activate venv preferring `python3.12` if available, otherwise use system `python3`
 if [ ! -d "emoji_env" ]; then
-  python3 -m venv emoji_env
+  if command -v python3.12 >/dev/null 2>&1; then
+    python3.12 -m venv emoji_env
+  else
+    python3 -m venv emoji_env
+  fi
 fi
 source emoji_env/bin/activate
 
